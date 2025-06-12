@@ -45,12 +45,12 @@ public class ListViewAdapter extends BaseAdapter {
             TextView date = convertView.findViewById(R.id.date);
             TextView income = convertView.findViewById(R.id.income);
             TextView expenses = convertView.findViewById(R.id.expenses);
-            TextView status = convertView.findViewById(R.id.status);
+            TextView status = convertView.findViewById(R.id.saved);
 
             date.setText(monthlies.get(position).getDate());
-            income.setText(String.format("₱ %s", String.valueOf(monthlies.get(position).getIncome())));
-            expenses.setText(String.format("₱ %s", String.valueOf(monthlies.get(position).getExpenses())));
-            status.setText(String.format("₱ %s", String.valueOf(monthlies.get(position).getStatus())));
+            income.setText(String.format("Income: ₱ %s", String.valueOf(monthlies.get(position).getIncome())));
+            expenses.setText(String.format("Expenses: ₱ %s", String.valueOf(monthlies.get(position).getExpenses())));
+            status.setText(String.format("Saved: ₱ %s", String.valueOf(monthlies.get(position).getSaved())));
 
             convertView.setOnClickListener(v -> {
                 Toast.makeText(context, "This has been clicked", Toast.LENGTH_SHORT).show();
