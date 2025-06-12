@@ -1,6 +1,6 @@
 package com.shirozo.simplemoneymanagement.classes;
 
-public class Monthly {
+public class Money {
 
     private final Float income;
     private final Float expenses;
@@ -10,7 +10,7 @@ public class Monthly {
 
     private final Integer id;
 
-    public Monthly (Integer id, Float income, Float expenses, String date) {
+    public Money(Integer id, Float income, Float expenses, String date) {
         this.id = id;
         this.income = income;
         this.expenses = expenses;
