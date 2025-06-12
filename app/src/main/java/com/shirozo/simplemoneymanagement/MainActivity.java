@@ -9,7 +9,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.shirozo.simplemoneymanagement.classes.Monthly;
+import com.shirozo.simplemoneymanagement.classes.Money;
 
 import java.util.ArrayList;
 
@@ -29,9 +29,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //! Testing data only
-        ArrayList<Monthly> monthlies = new ArrayList<>();
-        Monthly monthly = new Monthly(1, (float) 100, (float) 150, "December 2025");
-        monthlies.add(monthly);
+        ArrayList<Money> monthlies = new ArrayList<>();
+        Money money = new Money(1, (float) 100, (float) 150, "December 2025");
+        monthlies.add(money);
 
         listView = findViewById(R.id.monthly_summary);
         ListViewAdapter adapter = new ListViewAdapter(this, monthlies);
