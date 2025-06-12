@@ -4,7 +4,7 @@ public class Monthly {
 
     private final Float income;
     private final Float expenses;
-    private final Float status;
+    private final Float saved;
 
     private final String date;
 
@@ -15,7 +15,7 @@ public class Monthly {
         this.income = income;
         this.expenses = expenses;
         this.date = date;
-        this.status = income - expenses;
+        this.saved = income - expenses;
     }
 
     public Integer getId() {
@@ -30,8 +30,8 @@ public class Monthly {
         return expenses;
     }
 
-    public Float getStatus() {
-        return status;
+    public Float getSaved() {
+        return saved;
     }
 
     public String getDate() {
