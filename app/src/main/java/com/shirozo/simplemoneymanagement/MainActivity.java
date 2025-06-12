@@ -1,6 +1,7 @@
 package com.shirozo.simplemoneymanagement;
 
 import android.os.Bundle;
+import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +9,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.shirozo.simplemoneymanagement.classes.Monthly;
+
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
+
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +27,14 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        //! Testing data only
+        ArrayList<Monthly> monthlies = new ArrayList<>();
+        Monthly monthly = new Monthly(1, (float) 100, (float) 150, "December 2025");
+        monthlies.add(monthly);
+
+        listView = findViewById(R.id.monthly_summary);
+        ListViewAdapter adapter = new ListViewAdapter(this, monthlies);
+        listView.setAdapter(adapter);
     }
 }
