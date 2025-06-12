@@ -15,8 +15,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ListView listView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         Money money = new Money(1, (float) 100, (float) 150, "December 2025");
         monthlies.add(money);
 
-        listView = findViewById(R.id.monthly_summary);
+        ListView listView = findViewById(R.id.monthly_summary);
         ListViewAdapter adapter = new ListViewAdapter(this, monthlies);
         listView.setAdapter(adapter);
     }
