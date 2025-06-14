@@ -128,7 +128,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Daily Summary"
+            android:text="Transactions"
             android:textStyle="bold"
             android:textSize="20sp"
             android:layout_marginBottom="20dp"
