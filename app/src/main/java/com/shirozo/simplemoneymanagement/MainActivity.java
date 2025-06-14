@@ -9,6 +9,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.shirozo.simplemoneymanagement.adapter.ListViewAdapter;
 import com.shirozo.simplemoneymanagement.classes.Money;
 
 import java.util.ArrayList;
@@ -26,13 +27,15 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        int phase = 1;
+
         //! Testing data only
         ArrayList<Money> monthlies = new ArrayList<>();
         Money money = new Money(1, (float) 100, (float) 150, "December 2025");
         monthlies.add(money);
 
         ListView listView = findViewById(R.id.monthly_summary);
-        ListViewAdapter adapter = new ListViewAdapter(this, monthlies);
+        ListViewAdapter adapter = new ListViewAdapter(this, monthlies, phase);
         listView.setAdapter(adapter);
     }
 }
