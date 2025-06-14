@@ -7,6 +7,7 @@
     <color name="save_bg">#EFF6FF</color>
     <color name="save">#2563EB</color>
     <color name="expenses">#DC2626</color>
+    <color name="transaction">#2563EB</color>
     <color name="expenses_bg">#FEF2F2</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
