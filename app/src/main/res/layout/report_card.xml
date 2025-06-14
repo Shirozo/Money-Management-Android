@@ -48,12 +48,19 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/saved"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="Saved: ₱0"
+                android:text="Saved: "
                 android:textColor="@color/save"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/saved"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₱22220"
+                android:textColor="@color/income"
                 android:textSize="15sp" />
 
         </LinearLayout>
