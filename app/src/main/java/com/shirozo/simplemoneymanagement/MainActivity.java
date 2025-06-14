@@ -32,9 +32,13 @@ public class MainActivity extends AppCompatActivity {
         //! Testing data only
         ArrayList<Money> monthlies = new ArrayList<>();
         Money money = new Money(1, (float) 100, (float) 150, "December 2025");
+        Money money1 = new Money(2, (float) 100, (float) 150, "November 2025");
         monthlies.add(money);
+        monthlies.add(money1);
 
         ListView listView = findViewById(R.id.monthly_summary);
+        listView.setDivider(null);
+        listView.setDividerHeight(10);
         ListViewAdapter adapter = new ListViewAdapter(this, monthlies, phase);
         listView.setAdapter(adapter);
     }
