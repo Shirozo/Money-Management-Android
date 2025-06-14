@@ -13,8 +13,11 @@ import android.widget.TextView;
 import com.shirozo.simplemoneymanagement.R;
 import com.shirozo.simplemoneymanagement.classes.Transaction;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DailyAdapter extends BaseAdapter {
 
@@ -67,7 +70,13 @@ public class DailyAdapter extends BaseAdapter {
             transaction.setText(transaction_data.getTransaction());
 
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-            transaction_date.setText(sdf.format(transaction_data.getTransaction_date()));
+            SimpleDateFormat Inputsdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = Inputsdf.parse(transaction_data.getTransaction_date());
+                transaction_date.setText(Inputsdf.format(date));
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
 
         }
         return convertView;
