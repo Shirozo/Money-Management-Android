@@ -1,14 +1,17 @@
-package com.shirozo.simplemoneymanagement;
+package com.shirozo.simplemoneymanagement.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.shirozo.simplemoneymanagement.DailyActivity;
+import com.shirozo.simplemoneymanagement.MonthlyActivity;
+import com.shirozo.simplemoneymanagement.R;
 import com.shirozo.simplemoneymanagement.classes.Money;
 
 import java.text.DecimalFormat;
@@ -19,9 +22,12 @@ public class ListViewAdapter extends BaseAdapter {
     private ArrayList<Money> monthlies;
     private Context context;
 
-    public ListViewAdapter(Context context, ArrayList<Money> monthlies) {
+    private final int phase;
+
+    public ListViewAdapter(Context context, ArrayList<Money> monthlies, int phase) {
         this.monthlies = monthlies;
         this.context = context;
+        this.phase = phase;
     }
 
     @Override
@@ -54,10 +60,16 @@ public class ListViewAdapter extends BaseAdapter {
             date.setText(monthlies.get(position).getDate());
             income.setText(String.format("Income: ₱ %s", df.format(monthlies.get(position).getIncome())));
             expenses.setText(String.format("Expenses: ₱ %s", df.format(monthlies.get(position).getExpenses())));
-            status.setText(String.format("Saved: ₱ %s", df.format(monthlies.get(position).getSaved())));
+            Float saved = monthlies.get(position).getSaved();
+            status.setText(String.format(df.format(saved)));
+            status.setTextColor(Color.parseColor(saved > 0 ? "#16A34A" : "#DC2626"));
 
             convertView.setOnClickListener(v -> {
                 Intent intent = new Intent(context, MonthlyActivity.class);
+                if (phase != 1) {
+                    intent = new Intent(context, DailyActivity.class);
+
+                }
                 intent.putExtra("id", String.valueOf(monthlies.get(position).getId()));
                 context.startActivity(intent);
             });
