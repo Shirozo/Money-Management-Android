@@ -52,8 +52,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="Status: ₱0"
-                android:textColor="@color/expenses"
+                android:text="Saved: ₱0"
+                android:textColor="@color/save"
                 android:textSize="15sp" />
 
         </LinearLayout>
