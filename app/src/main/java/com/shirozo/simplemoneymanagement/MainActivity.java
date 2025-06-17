@@ -10,6 +10,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.shirozo.simplemoneymanagement.adapter.ListViewAdapter;
 import com.shirozo.simplemoneymanagement.classes.Money;
 import com.shirozo.simplemoneymanagement.database.DatabaseHelper;
@@ -30,6 +31,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         LoadData();
+
+        FloatingActionButton button = findViewById(R.id.floatingActionButton);
+        button.setOnClickListener(v -> {
+            CustomModal modal = new CustomModal(this);
+            modal.setOnAddedListener(this::LoadData);
+            modal.show();
+        });
     }
 
     @Override

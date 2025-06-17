@@ -29,14 +29,6 @@ public class DailyActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-
-        FloatingActionButton button = findViewById(R.id.floatingActionButton);
-        button.setOnClickListener(v -> {
-            CustomModal modal = new CustomModal(this);
-            modal.setOnAddedListener(this::loadData);
-            modal.show();
-        });
     }
 
     @Override
