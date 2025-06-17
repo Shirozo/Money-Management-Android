@@ -138,7 +138,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String[] parts = date.split("-");
-        Log.e("date", date);
         Cursor cursor = db.rawQuery(
                 "SELECT " +
                         "SUM(CASE WHEN type = 0 THEN amount ELSE 0 END) AS total_income, " +
@@ -160,7 +159,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String[] parts = date.split("-");
-        Log.e("date", date);
         Cursor cursor = db.rawQuery(
                 "SELECT " +
                         "SUM(CASE WHEN type = 0 THEN amount ELSE 0 END) AS total_income, " +
@@ -169,6 +167,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         "FROM money " +
                         "WHERE strftime('%Y', created_at) = ? AND strftime('%m', created_at) = ?",
                 new String[]{parts[0], parts[1]}
+        );
+        cursor.moveToFirst();
+        return new String[]{
+                cursor.getString(0),
+                cursor.getString(1),
+                cursor.getString(2)
+        };
+    }
+
+    public String[] getSummary() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT " +
+                        "SUM(CASE WHEN type = 0 THEN amount ELSE 0 END) AS total_income, " +
+                        "SUM(CASE WHEN type = 1 THEN amount ELSE 0 END) AS total_expenses, " +
+                        "SUM(CASE WHEN type = 0 THEN amount ELSE 0 END) - SUM(CASE WHEN type = 1 THEN amount ELSE 0 END) AS saved " +
+                        "FROM money ",
+                new String[]{}
         );
         cursor.moveToFirst();
         return new String[]{
