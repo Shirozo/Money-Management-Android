@@ -28,7 +28,7 @@ public class MonthlyActivity extends AppCompatActivity {
         });
 
         ArrayList<Money> monthlies = new ArrayList<>();
-        Money money = new Money(1, (float) 100, (float) 150, "December 21");
+        Money money = new Money(1, (float) 100, (float) 150, (float) 100, "December 21");
         monthlies.add(money);
 
         int phase = 2;
