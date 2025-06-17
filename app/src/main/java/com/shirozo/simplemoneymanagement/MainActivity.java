@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.shirozo.simplemoneymanagement.adapter.ListViewAdapter;
 import com.shirozo.simplemoneymanagement.classes.Money;
+import com.shirozo.simplemoneymanagement.database.DatabaseHelper;
 
 import java.util.ArrayList;
 
@@ -29,12 +30,9 @@ public class MainActivity extends AppCompatActivity {
 
         int phase = 1;
 
-        //! Testing data only
-        ArrayList<Money> monthlies = new ArrayList<>();
-        Money money = new Money(1, (float) 100, (float) 150, "December 2025");
-        Money money1 = new Money(2, (float) 100, (float) 150, "November 2025");
-        monthlies.add(money);
-        monthlies.add(money1);
+        DatabaseHelper db = new DatabaseHelper(this);
+
+        ArrayList<Money> monthlies = db.getPerMonth();
 
         ListView listView = findViewById(R.id.monthly_summary);
         listView.setDivider(null);
