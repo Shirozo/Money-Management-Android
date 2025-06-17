@@ -10,12 +10,12 @@ public class Money {
 
     private final Integer id;
 
-    public Money(Integer id, Float income, Float expenses, String date) {
+    public Money(Integer id, Float income, Float expenses, Float saved, String date) {
         this.id = id;
         this.income = income;
         this.expenses = expenses;
         this.date = date;
-        this.saved = income - expenses;
+        this.saved = saved;
     }
 
     public Integer getId() {
