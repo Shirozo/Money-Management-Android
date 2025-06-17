@@ -55,9 +55,18 @@ public class ListViewAdapter extends BaseAdapter {
             TextView expenses = convertView.findViewById(R.id.expenses);
             TextView status = convertView.findViewById(R.id.saved);
 
+
+            String[] months = {
+                    "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+            };
+
+            String[] parts = monthlies.get(position).getDate().split("-");
+            String newDate = months[Integer.parseInt(parts[1]) - 1] + " " + parts[0];
+            date.setText(newDate);
+
             DecimalFormat df = new DecimalFormat("#,###.##");
 
-            date.setText(monthlies.get(position).getDate());
             income.setText(String.format("Income: ₱ %s", df.format(monthlies.get(position).getIncome())));
             expenses.setText(String.format("Expenses: ₱ %s", df.format(monthlies.get(position).getExpenses())));
             Float saved = monthlies.get(position).getSaved();
@@ -70,7 +79,7 @@ public class ListViewAdapter extends BaseAdapter {
                     intent = new Intent(context, DailyActivity.class);
 
                 }
-                intent.putExtra("id", String.valueOf(monthlies.get(position).getId()));
+                intent.putExtra("date", monthlies.get(position).getDate());
                 context.startActivity(intent);
             });
         }
