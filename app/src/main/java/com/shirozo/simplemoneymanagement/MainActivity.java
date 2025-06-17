@@ -28,6 +28,16 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        LoadData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LoadData();
+    }
+
+    public void LoadData() {
         int phase = 1;
 
         DatabaseHelper db = new DatabaseHelper(this);
