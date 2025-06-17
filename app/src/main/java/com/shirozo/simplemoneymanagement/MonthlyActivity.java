@@ -11,8 +11,10 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.shirozo.simplemoneymanagement.adapter.ListViewAdapter;
 import com.shirozo.simplemoneymanagement.classes.Money;
+import com.shirozo.simplemoneymanagement.database.DatabaseHelper;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MonthlyActivity extends AppCompatActivity {
 
@@ -26,14 +28,26 @@ public class MonthlyActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        LoadData();
 
-        ArrayList<Money> monthlies = new ArrayList<>();
-        Money money = new Money(1, (float) 100, (float) 150, (float) 100, "December 21");
-        monthlies.add(money);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LoadData();
+    }
+
+    public void LoadData() {
+        DatabaseHelper db = new DatabaseHelper(this);
+        ArrayList<Money> monthlies = db.getMonthData(Objects.requireNonNull(getIntent().getStringExtra("date")));
 
         int phase = 2;
 
         ListView listView = findViewById(R.id.daily_summary);
+        listView.setDivider(null);
+        listView.setDividerHeight(10);
         ListViewAdapter adapter = new ListViewAdapter(this, monthlies, phase);
         listView.setAdapter(adapter);
     }
