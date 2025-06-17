@@ -46,25 +46,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FROM money GROUP BY month_year " +
                 "ORDER BY month_year DESC", new String[]{});
 
-        String[] months = {
-                "January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"
-        };
-
         ArrayList<Money> monies = new ArrayList<>();
 
         int id = 1;
         while (cursor.moveToNext()) {
-
-            String date = cursor.getString(0);
-            String[] parts = date.split("-");
-            String newDate = months[Integer.parseInt(parts[1]) - 1] + " " + parts[0];
-
             Money money = new Money(id,
                     cursor.getFloat(1),
                     cursor.getFloat(2),
                     cursor.getFloat(3),
-                    newDate);
+                    cursor.getString(0));
             monies.add(money);
             id++;
         }
