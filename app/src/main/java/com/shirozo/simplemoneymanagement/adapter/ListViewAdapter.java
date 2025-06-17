@@ -3,6 +3,7 @@ package com.shirozo.simplemoneymanagement.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,12 @@ public class ListViewAdapter extends BaseAdapter {
             };
 
             String[] parts = monthlies.get(position).getDate().split("-");
-            String newDate = months[Integer.parseInt(parts[1]) - 1] + " " + parts[0];
+            String newDate = "";
+            if (phase == 1) {
+                newDate = months[Integer.parseInt(parts[1]) - 1] + " " + parts[0];
+            } else {
+                newDate = parts[0] + " " +months[Integer.parseInt(parts[1]) - 1];
+            }
             date.setText(newDate);
 
             DecimalFormat df = new DecimalFormat("#,###.##");
@@ -79,7 +85,7 @@ public class ListViewAdapter extends BaseAdapter {
                     intent = new Intent(context, DailyActivity.class);
 
                 }
-                intent.putExtra("date", monthlies.get(position).getDate());
+                intent.putExtra("date", String.valueOf(monthlies.get(position).getDate()));
                 context.startActivity(intent);
             });
         }
