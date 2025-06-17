@@ -69,11 +69,11 @@ public class DailyAdapter extends BaseAdapter {
 
             transaction.setText(transaction_data.getTransaction());
 
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
             SimpleDateFormat Inputsdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             try {
                 Date date = Inputsdf.parse(transaction_data.getTransaction_date());
-                transaction_date.setText(Inputsdf.format(date));
+                transaction_date.setText(sdf.format(date));
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
