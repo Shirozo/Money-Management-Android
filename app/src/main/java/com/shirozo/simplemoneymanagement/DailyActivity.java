@@ -9,8 +9,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.shirozo.simplemoneymanagement.adapter.DailyAdapter;
 import com.shirozo.simplemoneymanagement.classes.Transaction;
+import com.shirozo.simplemoneymanagement.database.DatabaseHelper;
 
 import java.util.ArrayList;
 
@@ -27,13 +29,14 @@ public class DailyActivity extends AppCompatActivity {
             return insets;
         });
 
-        ArrayList<Transaction> transactions = new ArrayList<>();
+        FloatingActionButton button = findViewById(R.id.floatingActionButton);
+        button.setOnClickListener(v -> {
+            CustomModal modal = new CustomModal(this);
+            modal.show();
+        });
 
-        Transaction transaction = new Transaction(1, "Salary", "2025-06-14 23:45:00", "1000", 0);
-        Transaction transaction1 = new Transaction(2, "Food", "2025-06-14 23:46:00", "400", 1);
-
-        transactions.add(transaction);
-        transactions.add(transaction1);
+        DatabaseHelper db = new DatabaseHelper(this);
+        ArrayList<Transaction> transactions = db.getAll();
 
         ListView listView = findViewById(R.id.daily_summary);
         listView.setDivider(null);
