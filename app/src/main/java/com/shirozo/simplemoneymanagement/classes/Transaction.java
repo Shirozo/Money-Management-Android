@@ -12,7 +12,7 @@ public class Transaction {
 
     private final Integer type;
 
-    public Transaction(int id, String transaction, String transaction_date, String transaction_amount, Integer type) {
+    public Transaction(int id, String transaction, String transaction_amount, Integer type, String transaction_date) {
         this.id = id;
         this.transaction = transaction;
         this.transaction_date = transaction_date;
