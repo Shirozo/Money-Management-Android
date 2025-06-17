@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.shirozo.simplemoneymanagement.database.DatabaseHelper;
+import com.shirozo.simplemoneymanagement.interfaces.OnAddListener;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -22,6 +23,12 @@ public class CustomModal {
 
     private Dialog dialog;
     private int type = -1;
+
+    private OnAddListener listener;
+
+    public void setOnAddedListener(OnAddListener listener) {
+        this.listener = listener;
+    }
     public CustomModal(Context context) {
         this.context = context;
     }
@@ -96,6 +103,11 @@ public class CustomModal {
                     amount.setText("");
                     radioGroup.clearCheck();
                     Toast.makeText(context, "Data added!", Toast.LENGTH_SHORT).show();
+
+                    if (listener != null) {
+                        listener.onAddedListener();
+                    }
+
                 } else {
                     Toast.makeText(context, "Error Adding Data!", Toast.LENGTH_SHORT).show();
                 }
