@@ -168,7 +168,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         "SUM(CASE WHEN type = 0 THEN amount ELSE 0 END) - SUM(CASE WHEN type = 1 THEN amount ELSE 0 END) AS saved " +
                         "FROM money " +
                         "WHERE strftime('%Y', created_at) = ? AND strftime('%m', created_at) = ?",
-                new String[]{parts[1], parts[0]}
+                new String[]{parts[0], parts[1]}
         );
         cursor.moveToFirst();
         return new String[]{
