@@ -10,6 +10,7 @@ import android.widget.RadioGroup;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.shirozo.simplemoneymanagement.classes.Money;
 import com.shirozo.simplemoneymanagement.classes.Transaction;
 
 import java.util.ArrayList;
@@ -34,6 +35,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS money");
     }
 
+
+    public ArrayList<Money> getPerMonth() {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT strftime('%Y-%m', created_at) AS month_year," +
+                "SUM(CASE WHEN type = 0 THEN amount ELSE 0 END) AS total_income," +
+                "SUM(CASE WHEN type = 1 THEN amount ELSE 0 END) AS total_expenses," +
+                "SUM(CASE WHEN type = 0 THEN amount ELSE 0 END) - SUM(CASE WHEN type = 1 THEN amount ELSE 0 END) AS saved " +
+                "FROM money GROUP BY month_year " +
+                "ORDER BY month_year DESC", new String[]{});
+
+        String[] months = {
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+        };
+
+        ArrayList<Money> monies = new ArrayList<>();
+
+        int id = 1;
+        while (cursor.moveToNext()) {
+
+            String date = cursor.getString(0);
+            String[] parts = date.split("-");
+            String newDate = months[Integer.parseInt(parts[1]) - 1] + " " + parts[0];
+
+            Money money = new Money(id,
+                    cursor.getFloat(1),
+                    cursor.getFloat(2),
+                    cursor.getFloat(3),
+                    newDate);
+            monies.add(money);
+            id++;
+        }
+        cursor.close();
+        return  monies;
+    }
     public boolean insertData(TextInputEditText description, TextInputEditText amount, Integer type) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -61,6 +98,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     );
             transactions.add(transaction);
         }
+
+        cursor.close();
 
         return transactions;
     }
