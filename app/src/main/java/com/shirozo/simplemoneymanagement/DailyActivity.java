@@ -29,13 +29,8 @@ public class DailyActivity extends AppCompatActivity {
             return insets;
         });
 
-        FloatingActionButton button = findViewById(R.id.floatingActionButton);
-        button.setOnClickListener(v -> {
-            CustomModal modal = new CustomModal(this);
-            modal.show();
-        });
-
         DatabaseHelper db = new DatabaseHelper(this);
+
         ArrayList<Transaction> transactions = db.getAll();
 
         ListView listView = findViewById(R.id.daily_summary);
@@ -43,5 +38,16 @@ public class DailyActivity extends AppCompatActivity {
         listView.setDividerHeight(10);
         DailyAdapter adapter = new DailyAdapter(this, transactions);
         listView.setAdapter(adapter);
+
+        FloatingActionButton button = findViewById(R.id.floatingActionButton);
+        button.setOnClickListener(v -> {
+            CustomModal modal = new CustomModal(this);
+            modal.setOnAddedListener(() -> {
+                ArrayList<Transaction> updatedData = db.getAll();
+                DailyAdapter newAdapter = new DailyAdapter(this, updatedData);
+                listView.setAdapter(newAdapter);
+            });
+            modal.show();
+        });
     }
 }
