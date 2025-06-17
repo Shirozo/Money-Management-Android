@@ -14,6 +14,7 @@ import com.shirozo.simplemoneymanagement.classes.Money;
 import com.shirozo.simplemoneymanagement.classes.Transaction;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -41,14 +42,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String[] parts = date.split("-");
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.rawQuery("SELECT strftime('%d-%m', created_at) AS month_day, " +
+        Cursor cursor = database.rawQuery("SELECT strftime('%d-%m-%Y', created_at) AS month_day, " +
                 "SUM(CASE WHEN type = 0 THEN amount ELSE 0 END) AS total_income, " +
                 "SUM(CASE WHEN type = 1 THEN amount ELSE 0 END) AS total_expenses, " +
                 "SUM(CASE WHEN type = 0 THEN amount ELSE 0 END) - SUM(CASE WHEN type = 1 THEN amount ELSE 0 END) AS save " +
                 "FROM money " +
                 "WHERE strftime('%Y', created_at) = ? " +
                 "GROUP BY month_day " +
-                "ORDER BY month_day DESC",
+                "ORDER BY month_day ASC",
                 new String[]{parts[0]});
 
         ArrayList<Money> monies = new ArrayList<>();
@@ -101,9 +102,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public ArrayList<Transaction> getAll() {
+    public ArrayList<Transaction> getPerDay(String date) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM money", new String[]{});
+
+        String[] parts = date.split("-");
+        Cursor cursor = db.rawQuery("SELECT id," +
+                        "description, " +
+                        "amount, " +
+                        "type, " +
+                        "strftime('%Y-%m-%d %H:%M:%S', created_at) AS time " +
+                        "FROM money " +
+                        "WHERE strftime('%Y', created_at) = ? AND " +
+                        "strftime('%m', created_at) = ? AND " +
+                        "strftime('%d', created_at) = ?",
+                new String[]{parts[2], parts[1], parts[0]});
 
         ArrayList<Transaction> transactions = new ArrayList<>();
 
@@ -120,5 +132,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
 
         return transactions;
+    }
+
+    public String[] getPerDaySummary(String date) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] parts = date.split("-");
+        Log.e("date", date);
+        Cursor cursor = db.rawQuery(
+                "SELECT " +
+                        "SUM(CASE WHEN type = 0 THEN amount ELSE 0 END) AS total_income, " +
+                        "SUM(CASE WHEN type = 1 THEN amount ELSE 0 END) AS total_expenses, " +
+                        "SUM(CASE WHEN type = 0 THEN amount ELSE 0 END) - SUM(CASE WHEN type = 1 THEN amount ELSE 0 END) AS saved " +
+                        "FROM money " +
+                        "WHERE strftime('%Y', created_at) = ? AND strftime('%m', created_at) = ? AND strftime('%d', created_at) = ?",
+                new String[]{parts[2], parts[1], parts[0]}
+        );
+        cursor.moveToFirst();
+        return new String[]{
+                cursor.getString(0),
+                cursor.getString(1),
+                cursor.getString(2)
+        };
+    }
+
+    public String[] getPerMonthSummary(String date) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] parts = date.split("-");
+        Log.e("date", date);
+        Cursor cursor = db.rawQuery(
+                "SELECT " +
+                        "SUM(CASE WHEN type = 0 THEN amount ELSE 0 END) AS total_income, " +
+                        "SUM(CASE WHEN type = 1 THEN amount ELSE 0 END) AS total_expenses, " +
+                        "SUM(CASE WHEN type = 0 THEN amount ELSE 0 END) - SUM(CASE WHEN type = 1 THEN amount ELSE 0 END) AS saved " +
+                        "FROM money " +
+                        "WHERE strftime('%Y', created_at) = ? AND strftime('%m', created_at) = ?",
+                new String[]{parts[1], parts[0]}
+        );
+        cursor.moveToFirst();
+        return new String[]{
+                cursor.getString(0),
+                cursor.getString(1),
+                cursor.getString(2)
+        };
     }
 }
