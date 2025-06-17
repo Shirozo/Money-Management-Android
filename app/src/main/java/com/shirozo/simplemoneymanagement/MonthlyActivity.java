@@ -2,6 +2,7 @@ package com.shirozo.simplemoneymanagement;
 
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,6 +42,17 @@ public class MonthlyActivity extends AppCompatActivity {
 
     public void LoadData() {
         DatabaseHelper db = new DatabaseHelper(this);
+
+        String[] cardData = db.getPerMonthSummary(getIntent().getStringExtra("date"));
+
+        TextView income = findViewById(R.id.monthly_income);
+        TextView expense = findViewById(R.id.monthly_expenses);
+        TextView saved = findViewById(R.id.monthly_saved);
+
+        income.setText("₱ " + cardData[0]);
+        expense.setText("₱ " + cardData[1]);
+        saved.setText("₱ " + cardData[2]);
+
         ArrayList<Money> monthlies = db.getMonthData(Objects.requireNonNull(getIntent().getStringExtra("date")));
 
         int phase = 2;
